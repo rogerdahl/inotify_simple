@@ -82,7 +82,7 @@ class INotify(FileIO):
                 manually with ``os.read(fd)``) to raise ``BlockingIOError`` if no data
                 is available."""
         global _libc; _libc = _libc or cdll.LoadLibrary('libc.so.6')
-        flags = (not inheritable) * CLOEXEC | bool(nonblocking) * NONBLOCK 
+        flags = (not inheritable) * CLOEXEC | bool(nonblocking) * NONBLOCK
         FileIO.__init__(self, _libc_call(_libc.inotify_init1, flags), mode='rb')
         self._poller = poll()
         self._poller.register(self.fileno())
